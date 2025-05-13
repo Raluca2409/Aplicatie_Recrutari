@@ -24,7 +24,7 @@ const Account = () => {
         if (docSnap.exists()) {
           setHasApplied(true);
           setExistingData(docSnap.data());
-          console.log("Aplicația găsită:", docSnap.data()); // ✅ DEBUG
+          console.log("Aplicația găsită:", docSnap.data()); 
         }
       }
     };
@@ -32,7 +32,6 @@ const Account = () => {
     fetchApplication();
   }, [user]);
 
-  // ✅ Actualizează valorile din formular
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
