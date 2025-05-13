@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+input::placeholder {
+  font-family: "Montserrat", sans-serif; /* sau ce folosești tu */
+  font-weight: 500;
+  color: #888; /* sau alt gri mai plăcut */
+  font-size: 1rem;
+}
+
+
+body {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.3rem;      
+  padding: 0.3rem 0.7rem;  
+  transition: all 0.25s ease;
+  display: inline-block;
+}
+
+.nav-link:hover {
+  transform: translateY(-2px) scale(1.1);
+  text-decoration: none;
+  color: #ffdcdc; 
+}
+
+.btn-pop{
+  transition: all 0.25s ease;
+}
+
+.btn-pop:hover{
+  transform: translateY(-2px) scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Pentru iconița FaUserCircle */
+.nav-icon {
+  cursor: pointer;
+  transition: transform 0.25s ease;
+}
+
+.nav-icon:hover {
+  transform: scale(1.1);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 35px;
+  right: 0;
+  background-color: white;
+  color: #b30000;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 1000;
+  width: 150px;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: inherit;
+    color: #b30000;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    box-sizing: border-box;
+    border-radius: 10px;
+  
+}
+
+.dropdown-item:hover {
+  background-color: #f4f4f4;
+}
