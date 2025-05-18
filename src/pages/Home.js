@@ -4,7 +4,19 @@ import { Link } from "react-router-dom";
 const Home = () => {
 
   return (
-    <div>
+  <div
+      style={{
+        backgroundImage: `url('/poza_fundal.jpg')`,  // dacă ai pus-o în public/
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        minHeight: "100vh", // ca să acopere toată pagina
+        width: "100%",
+        color: "white", // ca textul să fie vizibil peste imagine
+      }}
+  >
+
+    <div style={{ padding: "2rem"}}>
 
       <header style={{ textAlign: "center", padding: "3rem" }}>
         <h2>Bine ai venit în Liga Studenților</h2>
@@ -26,6 +38,7 @@ const Home = () => {
         {/* Poți adăuga aici imagini sau testimoniale */}
       </section>
     </div>
+  </div>
   );
 };
 

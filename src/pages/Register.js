@@ -39,6 +39,18 @@ const Register = () => {
       setError("Parolele nu se potrivesc!");
     }
 
+    if (password.length < 6) {
+      setError("Parola trebuie să aibă cel puțin 6 caractere.");
+      return;
+    }
+
+    const specialCharRegex = /[!@#$%^&*(),.?":{}|<>_]/;
+    if (!specialCharRegex.test(password)) {
+      setError("Parola trebuie să conțină cel puțin un caracter special.");
+      return;
+    }
+
+
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
 
@@ -63,6 +75,7 @@ const Register = () => {
 
   return (
     <div style={{
+      paddingTop: "80px",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
@@ -88,6 +101,7 @@ const Register = () => {
           type="text"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
+          disabled={user !== null}
           style={{
             ...inputStyle,
             borderColor: errors.lastName ? "red" : "#ccc"
@@ -101,6 +115,7 @@ const Register = () => {
           type="text"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
+          disabled={user !== null}
           style={{
             ...inputStyle,
             borderColor: errors.firstName ? "red" : "#ccc"
@@ -114,6 +129,7 @@ const Register = () => {
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          disabled={user !== null}
           style={{
             ...inputStyle,
             borderColor: errors.email ? "red" : "#ccc"
@@ -127,6 +143,7 @@ const Register = () => {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          disabled={user !== null}
           style={{
             ...inputStyle,
             borderColor: errors.password ? "red" : "#ccc"
@@ -140,6 +157,7 @@ const Register = () => {
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
+          disabled={user !== null}
           style={{
             ...inputStyle,
             borderColor: errors.confirmPassword ? "red" : "#ccc"
@@ -159,6 +177,7 @@ const Register = () => {
             fontWeight: "bold",
             cursor: "pointer"
           }}
+          disabled={user !== null}
         >
           Înregistrează-te
         </button>

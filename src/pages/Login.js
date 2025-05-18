@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { sendPasswordResetEmail } from "firebase/auth";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const [resetEmailSent, setResetEmailSent] = useState(false);
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -20,8 +24,26 @@ const Login = () => {
     }
   };
 
+  const handlePasswordReset = async () => {
+    if (!email) {
+      setError("Te rugăm să introduci adresa de email.");
+      return;
+    }
+  
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setResetEmailSent(true);
+      setError(""); // curăță alte erori
+    } catch (err) {
+      setError("A apărut o eroare la trimiterea emailului de resetare.");
+      console.error(err);
+    }
+  };
+  
+
   return (
     <div style={{
+      paddingTop: "80px",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
@@ -75,6 +97,26 @@ const Login = () => {
         >
           Conectează-te
         </button>
+
+        <p
+          onClick={handlePasswordReset}
+          style={{
+            color: "#b30000",
+            cursor: "pointer",
+            textAlign: "center",
+            marginTop: "1rem",
+            textDecoration: "underline"
+          }}
+        >
+          Ai uitat parola?
+        </p>
+        
+        {resetEmailSent && (
+          <p style={{ color: "green", textAlign: "center", marginTop: "0.5rem" }}>
+            Emailul pentru resetarea parolei a fost trimis!
+          </p>
+        )}
+
 
         {error && (
           <p style={{ color: "#b30000", textAlign: "center", marginTop: "0.5rem" }}>
