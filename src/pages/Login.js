@@ -60,7 +60,7 @@ const Login = () => {
         width: "100%",
         maxWidth: "400px"
       }}>
-        <h2 style={{ textAlign: "center", color: "#b30000" }}>Logare</h2>
+        <h2 style={{ textAlign: "center", color: "#b30000" }}>Conectare</h2>
 
         <input
           type="email"

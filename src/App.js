@@ -9,6 +9,8 @@ import Admin from "./pages/Admin";
 import AdminRoute from "./components/AdminRoute";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
+import Form from "./pages/Form";
+import AboutUs from "./pages/AboutUs";
 
 
 
@@ -21,7 +23,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/admin" element={ <AdminRoute> <Admin /> </AdminRoute> } />
-        <Route path="/account" element={ <PrivateRoute> <Account /> </PrivateRoute> } />
+        <Route path="/account" element={<Account />} />
+        <Route path="/form" element={<Form />}/>
+        <Route path="/aboutus" element={<AboutUs />}/>
       </Routes>
     </Router>
   );

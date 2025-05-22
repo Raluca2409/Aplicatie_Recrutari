@@ -60,12 +60,15 @@ const Navbar = () => {
         <Link className="nav-link" to="/">
           Acasă
         </Link>
-        <Link className="nav-link" to="/login">
-          Logare
+        <Link className="nav-link" to="/aboutus">
+          Despre noi
         </Link>
         <Link className="nav-link" to="/register">
           Înregistrare
         </Link>
+        {/* <Link className="nav-link" to="/register">
+          Înregistrare
+        </Link> */}
         <Link className="nav-link" to="/account">
           Contul Meu
         </Link>
@@ -73,7 +76,7 @@ const Navbar = () => {
 
       <div style={{ flex: "1", textAlign: "right" }}>
         {!user ? (
-          <Link to="/register">
+          <Link to="/login">
             <button
               className="btn-pop"
               style={{
@@ -88,7 +91,7 @@ const Navbar = () => {
                 borderRadius: "10px",
               }}
             >
-              Înregistrează-te
+              Conectează-te
             </button>
           </Link>
         ) : (

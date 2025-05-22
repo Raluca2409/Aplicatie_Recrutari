@@ -18,12 +18,6 @@ const Register = () => {
   const [error, setError] = useState("");
   const [errors, setErrors] = useState({});
 
-  useEffect(() => {
-    if (user) {
-      setError("Ești deja logat. Dacă vrei, mergi la contul tău.");
-    }
-  }, [user]);
-
   const handleRegister = async (e) => {
     e.preventDefault();
     setError("");
@@ -63,7 +57,7 @@ const Register = () => {
         createdAt: new Date()
       });
 
-      navigate("/account");
+      navigate("/");
     } catch (err) {
       if (err.code === "auth/email-already-in-use") {
         setError("Email-ul este deja folosit. Poți merge la logare!");
@@ -72,6 +66,34 @@ const Register = () => {
       }
     }
   };
+
+  if(user){
+    return(
+      <div style={{
+        marginTop: "2rem",
+        backgroundColor: "#fff",
+        padding: "2rem",
+        borderRadius: "12px",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+        maxWidth: "900px",
+        marginInline: "auto",
+        fontFamily: "Montserrat, sans-serif",
+        fontSize: "1.05rem",
+        lineHeight: "1.6",
+        display: "flex",
+        justifyContent: "space-between",
+        flexWrap: "wrap" ,
+        flexDirection: "column",
+        textAlign: "center",
+      }}>
+
+        <hr style={{ margin: "1.5rem 0" }} />
+        <p style={{ color: "#b30000", fontWeight: "bold" }}>Ești deja logat. Dacă vrei, mergi la contul tău.</p>
+
+      </div>
+
+    );
+  }
 
   return (
     <div style={{
