@@ -12,6 +12,7 @@ const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
+  const isRecruiter = user?.email?.endsWith("@ligaac.ro");
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -57,21 +58,40 @@ const Navbar = () => {
           gap: "2rem",
         }}
       >
-        <Link className="nav-link" to="/">
-          Acasă
-        </Link>
-        <Link className="nav-link" to="/aboutus">
-          Despre noi
-        </Link>
-        <Link className="nav-link" to="/register">
-          Înregistrare
-        </Link>
-        {/* <Link className="nav-link" to="/register">
-          Înregistrare
-        </Link> */}
-        <Link className="nav-link" to="/account">
-          Contul Meu
-        </Link>
+
+        {user ? (
+
+          isRecruiter ? (
+            <>
+            
+            <Link className="nav-link" to="/">Acasă</Link>
+            <Link className="nav-link" to="/aplicatii">Aplicații</Link>
+            <Link className="nav-link" to="/interviuri">Interviuri</Link>
+
+            </>
+          ) : (
+            <>
+
+             <Link className="nav-link" to="/">Acasă</Link>
+             <Link className="nav-link" to="/aboutus">Despre noi</Link>
+             <Link className="nav-link" to="/register">Înregistrare</Link>
+             <Link className="nav-link" to="/account">Contul Meu</Link>
+             <Link className="nav-link" to="/interviuri">Interviuri</Link>
+
+            </>
+            )
+          ) : (
+            <>
+            
+            <Link className="nav-link" to="/">Acasă</Link>
+             <Link className="nav-link" to="/aboutus">Despre noi</Link>
+             <Link className="nav-link" to="/register">Înregistrare</Link>
+             <Link className="nav-link" to="/account">Contul Meu</Link>
+
+            </>
+
+          )  
+        }  
       </div>
 
       <div style={{ flex: "1", textAlign: "right" }}>

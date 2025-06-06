@@ -42,13 +42,22 @@ const Login = () => {
   
 
   return (
+
     <div style={{
-      paddingTop: "80px",
+      backgroundImage: `url('/poza_fundal_blur.JPEG')`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      height: "100vh",
+      width: "100vw",
+      overflow: "hidden",
+      fontFamily: "Montserrat, sans-serif",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      minHeight: "80vh"
-    }}>
+      }}
+      >
+
       <form onSubmit={handleLogin} style={{
         backgroundColor: "#fff",
         padding: "2rem",
@@ -58,7 +67,7 @@ const Login = () => {
         flexDirection: "column",
         gap: "1rem",
         width: "100%",
-        maxWidth: "400px"
+        maxWidth: "450px"
       }}>
         <h2 style={{ textAlign: "center", color: "#b30000" }}>Conectare</h2>
 

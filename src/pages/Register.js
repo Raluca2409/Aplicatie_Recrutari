@@ -67,43 +67,73 @@ const Register = () => {
     }
   };
 
+  useEffect(() => {
+    if (error) {
+      const timeout = setTimeout(() => setError(""), 5000);
+      return () => clearTimeout(timeout);
+    }
+  }, [error]);
+
   if(user){
     return(
       <div style={{
-        marginTop: "2rem",
-        backgroundColor: "#fff",
-        padding: "2rem",
-        borderRadius: "12px",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-        maxWidth: "900px",
-        marginInline: "auto",
+        backgroundImage: `url('/poza_fundal_blur.JPEG')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        height: "100vh",
+        width: "100vw",
+        overflow: "hidden",
         fontFamily: "Montserrat, sans-serif",
-        fontSize: "1.05rem",
-        lineHeight: "1.6",
+        position: "relative",
+        color: "white",
         display: "flex",
-        justifyContent: "space-between",
-        flexWrap: "wrap" ,
-        flexDirection: "column",
-        textAlign: "center",
+        justifyContent: "center",
+        alignItems: "center",
+        boxSizing: "border-box",
       }}>
 
-        <hr style={{ margin: "1.5rem 0" }} />
-        <p style={{ color: "#b30000", fontWeight: "bold" }}>Ești deja logat. Dacă vrei, mergi la contul tău.</p>
-
+      <div
+      style={{
+        backgroundColor: "rgba(255, 255, 255, 0.69)",
+        backdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(10px)",
+        borderRadius: "16px",
+        padding: "2rem 3rem",
+        textAlign: "center",
+        maxWidth: "600px",
+        boxShadow: "0 8px 20px rgba(0, 0, 0, 0.4)",
+      }}
+      >
+      <h2 style={{ color: "#b30000", marginBottom: "1rem" }}>Ești deja logat. Dacă vrei, mergi la contul tău.</h2>
+      </div>  
       </div>
 
     );
   }
 
   return (
-    <div style={{
-      paddingTop: "80px",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      minHeight: "80vh"
-    }}>
-      <form onSubmit={handleRegister} style={{
+
+    <div
+    style={{
+      backgroundImage: `url('/poza_fundal_blur.JPEG')`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    height: "100vh",
+    width: "100vw",
+    overflow: "hidden",
+    fontFamily: "Montserrat, sans-serif",
+    position: "relative",
+    color: "white",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    boxSizing: "border-box",
+    }}
+  >
+
+      <form onSubmit={handleRegister} noValidate style={{
         backgroundColor: "#fff",
         padding: "2rem",
         borderRadius: "12px",
@@ -204,12 +234,30 @@ const Register = () => {
           Înregistrează-te
         </button>
 
-        {error && (
-          <p style={{ color: "#b30000", textAlign: "center", marginTop: "0.5rem" }}>
-            {error}
-          </p>
-        )}
       </form>
+
+      {error && (
+        <div style={{
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          backgroundColor: "rgba(255, 255, 255, 0.64)",
+          color: "#b30000",
+          padding: "3rem 3rem",
+          borderRadius: "16px",
+          fontSize: "1.2rem",
+          fontWeight: "600",
+          boxShadow: "0 8px 24px rgba(0, 0, 0, 0.25)",
+          backdropFilter: "blur(4px)",
+          zIndex: 9999,
+          textAlign: "center",
+          maxWidth: "80%",
+        }}>
+    {error}
+  </div>
+)}
+
     </div>
   );
 };

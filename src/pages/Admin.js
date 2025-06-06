@@ -13,7 +13,7 @@ const Admin = () => {
           id: doc.id,
           ...doc.data()
         }))
-        .filter(user => user.application); // doar cei care au aplicat
+        .filter(user => user.application); 
 
       setUsers(data);
     };

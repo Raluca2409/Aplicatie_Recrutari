@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const Formular = () => {
 
+  const navigate = useNavigate();
   const [user] = useAuthState(auth);
   const [formData, setFormData] = useState({
     facultate: "",
@@ -70,6 +72,7 @@ const Formular = () => {
         });
         setHasApplied(true);
         setExistingData(formData);
+        navigate("/account");
       } else {
         alert("Ai trimis deja aplicația.");
       }
@@ -94,26 +97,35 @@ const Formular = () => {
   if(!user){
     return(
       <div style={{
-        marginTop: "2rem",
-        backgroundColor: "#fff",
-        padding: "2rem",
-        borderRadius: "12px",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-        maxWidth: "900px",
-        marginInline: "auto",
+        backgroundImage: `url('/poza_fundal_blur.JPEG')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        height: "100vh",
+        width: "100vw",
+        overflow: "hidden",
         fontFamily: "Montserrat, sans-serif",
-        fontSize: "1.05rem",
-        lineHeight: "1.6",
         display: "flex",
-        justifyContent: "space-between",
-        flexWrap: "wrap" ,
-        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+  
+      <div style={{
+        backgroundColor: "rgba(255, 255, 255, 0.69)",
+        backdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(10px)",
+        borderRadius: "16px",
+        padding: "2rem 3rem",
         textAlign: "center",
-      }}>
+        maxWidth: "600px",
+        boxShadow: "0 8px 20px rgba(0, 0, 0, 0.4)",
+      }}
+      >
 
-        <hr style={{ margin: "1.5rem 0" }} />
-        <p style={{ color: "#b30000", fontWeight: "bold" }}>Trebuie să-ți creezi un cont înainte de a completa formularul.</p>
+        <h2 style={{ color: "#b30000", fontWeight: "bold" }}>Trebuie să-ți creezi un cont înainte de a completa formularul.</h2>
 
+      </div>
       </div>
     );
   }
@@ -121,37 +133,52 @@ const Formular = () => {
   if(existingData && user !== null){
     return(
       <div style={{
-        marginTop: "2rem",
-        backgroundColor: "#fff",
-        padding: "2rem",
-        borderRadius: "12px",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-        maxWidth: "900px",
-        marginInline: "auto",
+        backgroundImage: `url('/poza_fundal_blur.JPEG')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        height: "100vh",
+        width: "100vw",
+        overflow: "hidden",
         fontFamily: "Montserrat, sans-serif",
-        fontSize: "1.05rem",
-        lineHeight: "1.6",
         display: "flex",
-        justifyContent: "space-between",
-        flexWrap: "wrap" ,
-        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+  
+      <div style={{
+        backgroundColor: "rgba(255, 255, 255, 0.69)",
+        backdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(10px)",
+        borderRadius: "16px",
+        padding: "2rem 3rem",
         textAlign: "center",
-      }}>
+        maxWidth: "600px",
+        boxShadow: "0 8px 20px rgba(0, 0, 0, 0.4)",
+      }}
+      >
+        <h2 style={{ color: "#b30000", fontWeight: "bold" }}>Deja ai completat formularul, poți merge la contul tău pentru a-ți vedea răspunsurile.</h2>
 
-        <hr style={{ margin: "1.5rem 0" }} />
-        <p style={{ color: "#b30000", fontWeight: "bold" }}>Deja ai completat formularul!</p>
-
+      </div> 
       </div>  
     );
   }
 
   return (
     <div style={{
+      backgroundImage: `url('/poza_fundal_blur.JPEG')`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      backgroundAttachment: "fixed",
+      minHeight: "100vh",
+      width: "100vw",
       paddingTop: "80px",
+      fontFamily: "Montserrat, sans-serif",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      minHeight: "80vh"
     }}>
 
     <form onSubmit={handleSubmit} style={{

@@ -1,7 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { auth } from "../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Home = () => {
+
+  const [user] = useAuthState(auth);
+  const isRecruiter = user?.email?.endsWith("@ligaac.ro");
+
   return (
     <div
       style={{
@@ -11,7 +17,7 @@ const Home = () => {
         backgroundRepeat: "no-repeat",
         minHeight: "100vh",
         width: "100%",
-        overflow: "hidden", // oprește scroll
+        overflow: "hidden", 
         fontFamily: "Montserrat, sans-serif",
         position: "relative",
         color: "white",
@@ -26,11 +32,11 @@ const Home = () => {
           padding: "0 5vw",
         }}
       >
-        {/* 🟥 Blurred Text Box în stânga */}
+    
         <div
           style={{
-            backgroundColor: "rgba(0, 0, 0, 0.3)",
-            backdropFilter: "blur(12px)",
+            backgroundColor: "rgba(0, 0, 0, 0.17)",
+            backdropFilter: "blur(8px)",
             WebkitBackdropFilter: "blur(12px)",
             borderRadius: "16px",
             padding: "2rem 2.5rem",
@@ -50,13 +56,14 @@ const Home = () => {
         <div style={{ 
           display: "flex",
           flexDirection: "column",
-          alignItems: "flex-end", // butonul în dreapta
-          justifyContent: "flex-start", // sus pe verticală
+          alignItems: "flex-end", 
+          justifyContent: "flex-start", 
           flex: 1,
-          paddingTop: "5rem", // mută-l mai sus
+          paddingTop: "5rem", 
           paddingRight: "17vw"
           }}>
 
+          if{!isRecruiter && (
           <Link to="/form">
              <button
               className="btn-pop"
@@ -77,6 +84,7 @@ const Home = () => {
               Începe aplicarea
              </button>
            </Link>
+          )}
          </div>
 
       </div>
