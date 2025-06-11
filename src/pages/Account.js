@@ -205,6 +205,29 @@ const Account = () => {
             <li>{existingData.top3}</li>
           </ol>
         </div>
+
+        <div style={{ textAlign: "center", marginTop: "2rem", width: "100%" }}>
+        <hr style={{ margin: "1.5rem 0" }} />
+
+         <p>
+           <strong>Status aplicație:</strong>{" "}
+           <span style={{
+             fontWeight: "bold",
+             color:
+               existingData.status === "accepted"
+                 ? "green"
+                 : existingData.status === "rejected"
+                 ? "red"
+                 : "#b30000"
+           }}>
+             {existingData.status === "accepted"
+               ? "Acceptat"
+               : existingData.status === "rejected"
+               ? "Respins"
+               : "În așteptare"}
+           </span>
+         </p>
+       </div>
       </div>
       </div>
      );

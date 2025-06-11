@@ -4,6 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { doc, updateDoc } from "firebase/firestore";
 
 const Applications = () => {
   const [user, loading] = useAuthState(auth);
@@ -17,6 +18,9 @@ const Applications = () => {
   const [filterFac, setFilterFac] = useState("");
   const [filterSpec, setFilterSpec] = useState("");
   const [filterAn, setFilterAn] = useState("");
+  const [selectedApp, setSelectedApp] = useState(null);
+  const [observatii, setObservatii] = useState("");
+  const [status, setStatus] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,6 +40,28 @@ const Applications = () => {
     };
     fetchData();
   }, []);
+
+  const handleReviewClick = (app) => {
+    setSelectedApp(app);
+    setObservatii(app.observatii || "");
+    setStatus(app.status || "pending");
+  };
+  
+  const handleSaveStatus = async () => {
+    if (selectedApp) {
+      await updateDoc(doc(db, "applications", selectedApp.id), {
+        observatii,
+        status,
+      });
+      setApplications((prev) =>
+        prev.map(app =>
+          app.id === selectedApp.id ? { ...app, observatii, status } : app
+        )
+      );
+      setSelectedApp(null);
+    }
+  };
+  
 
   const filteredApplications = applications
     .filter(app => {
@@ -179,28 +205,126 @@ const Applications = () => {
                 </div>
 
                 <p><strong>Email:</strong> {app.email}</p>
+                {app.observatii && (
+                <p style={{ color: "gray", marginTop: "0.5rem" }}>
+                    <strong>Observații:</strong> {app.observatii}
+                </p>
+                )}
+
 
                 <button
-                  style={{
-                    position: "absolute",
-                    bottom: "1rem",
-                    right: "1rem",
-                    backgroundColor: "#F29339",
-                    color: "white",
-                    padding: "1rem 2rem",
-                    borderRadius: "8px",
-                    fontWeight: "bold",
-                    border: "none",
-                    cursor: "pointer"
-                  }}
-                >
-                  În așteptare
+                    onClick={() => handleReviewClick(app)}
+                    style={{
+                      position: "absolute",
+                      bottom: "1rem",
+                      right: "1rem",
+                      backgroundColor: app.status === 'accepted' ? '#2e7d32' : app.status === 'rejected' ? '#c62828' : '#F29339',
+                      color: "white",
+                      padding: "1rem 2rem",
+                      borderRadius: "8px",
+                      fontWeight: "bold",
+                      border: "none",
+                      cursor: "pointer"
+                    }}
+                > 
+                {app.status === 'accepted' ? 'Acceptat' : app.status === 'rejected' ? 'Respins' : 'Verifică'}
                 </button>
+
               </div>
             );
           })}
         </div>
       </div>
+
+      {selectedApp && (
+  <div style={{
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100vw",
+    height: "100vh",
+    background: "rgba(0,0,0,0.5)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 1000
+  }}>
+    <div style={{
+      background: "#fff",
+      padding: "2rem",
+      borderRadius: "12px",
+      maxWidth: "600px",
+      width: "100%"
+    }}>
+      <h2 style={{ marginBottom: "1rem" }}>Aplicație: {selectedApp.lastName} {selectedApp.firstName}</h2>
+      <p><strong>Email:</strong> {selectedApp.email}</p>
+      <p><strong>Număr de telefon:</strong> {selectedApp.tel}</p>
+      <p><strong>Facultate:</strong> {selectedApp.facultate}</p>
+      <p><strong>Specializare:</strong> {selectedApp.specializare}</p>
+      <p><strong>An studiu:</strong> {selectedApp.anstudiu}</p>
+      
+      <p><strong>Top 3 departamente:</strong></p>
+      <ol>
+        <li>{selectedApp.top1}</li>
+        <li>{selectedApp.top2}</li>
+        <li>{selectedApp.top3}</li>
+      </ol>
+      
+      <p><strong>Ai mai făcut voluntariat?</strong> {selectedApp.q1}</p>
+      {selectedApp.q1 === "Da" && (
+        <p><strong>Detalii:</strong> {selectedApp.answer}</p>
+      )}
+      
+      <p><strong>De ce vrei să te alături?</strong><br />{selectedApp.q2}</p>
+      <p><strong>Despre tine:</strong><br />{selectedApp.q3}</p>
+      
+      <hr style={{ margin: "1.5rem 0" }} />
+      
+      <textarea
+        value={observatii}
+        onChange={e => setObservatii(e.target.value)}
+        placeholder="Observații pentru aplicant"
+        style={{
+          width: "100%",
+          minHeight: "80px",
+          marginBottom: "1rem",
+          padding: "0.5rem"
+        }}
+      />
+  
+      <select
+        value={status}
+        onChange={e => setStatus(e.target.value)}
+        style={{ width: "100%", marginBottom: "1rem", padding: "0.5rem" }}
+      >
+        <option value="pending">În așteptare</option>
+        <option value="accepted">Acceptat</option>
+        <option value="rejected">Respins</option>
+      </select>
+
+
+      <button onClick={handleSaveStatus} style={{
+        background: "#b30000",
+        color: "white",
+        padding: "0.75rem 1.5rem",
+        border: "none",
+        borderRadius: "8px",
+        cursor: "pointer"
+      }}>Salvează</button>
+
+      <button onClick={() => setSelectedApp(null)} style={{
+        marginLeft: "1rem",
+        padding: "0.75rem 1.5rem",
+        border: "1px solid #ccc",
+        borderRadius: "8px",
+        background: "white",
+        cursor: "pointer"
+      }}>Închide</button>
+    </div>
+  </div>
+)}
+
+
     </div>
   );
 };
