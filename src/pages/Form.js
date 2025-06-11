@@ -68,6 +68,10 @@ const Formular = () => {
       if (!existingSnap.exists()) {
         await setDoc(docRef, {
           ...formData,
+          userId: user.uid,    
+          firstName: userInfo.firstName,
+          lastName: userInfo.lastName,
+          email: user.email,
           createdAt: new Date(),
         });
         setHasApplied(true);

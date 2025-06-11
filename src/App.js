@@ -11,6 +11,8 @@ import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Form from "./pages/Form";
 import AboutUs from "./pages/AboutUs";
+import Applications from "./pages/Applications";
+import Interviews from "./pages/Interviews";
 
 
 
@@ -26,6 +28,8 @@ function App() {
         <Route path="/account" element={<Account />} />
         <Route path="/form" element={<Form />}/>
         <Route path="/aboutus" element={<AboutUs />}/>
+        <Route path="/applications" element={<Applications />}/>
+        <Route path="/interview" element={<Interviews />}/>
       </Routes>
     </Router>
   );

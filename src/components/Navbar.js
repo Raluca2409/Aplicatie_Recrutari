@@ -63,10 +63,10 @@ const Navbar = () => {
 
           isRecruiter ? (
             <>
-            
+
             <Link className="nav-link" to="/">Acasă</Link>
-            <Link className="nav-link" to="/aplicatii">Aplicații</Link>
-            <Link className="nav-link" to="/interviuri">Interviuri</Link>
+            <Link className="nav-link" to="/applications">Aplicații</Link>
+            <Link className="nav-link" to="/interview">Interviuri</Link>
 
             </>
           ) : (
@@ -76,7 +76,7 @@ const Navbar = () => {
              <Link className="nav-link" to="/aboutus">Despre noi</Link>
              <Link className="nav-link" to="/register">Înregistrare</Link>
              <Link className="nav-link" to="/account">Contul Meu</Link>
-             <Link className="nav-link" to="/interviuri">Interviuri</Link>
+             <Link className="nav-link" to="/interview">Interviuri</Link>
 
             </>
             )

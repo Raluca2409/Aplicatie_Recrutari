@@ -42,11 +42,13 @@ const AboutUs = () => {
   const totalPages = Math.ceil(departments.length / itemsPerPage);
 
   const handlePrev = () => {
-    if (currentPage > 0) setCurrentPage(currentPage - 1);
+    const prevPage = (currentPage - 1 + totalPages) % totalPages;
+    setCurrentPage(prevPage);
   };
 
   const handleNext = () => {
-    if (currentPage < totalPages - 1) setCurrentPage(currentPage + 1);
+    const nextPage = (currentPage + 1) % totalPages;
+    setCurrentPage(nextPage);
   };
 
   const visibleDepartments = departments.slice(
@@ -138,10 +140,8 @@ const AboutUs = () => {
         ))}
       </div>
 
-      {/* Navigare */}
       <button
         onClick={handlePrev}
-        disabled={currentPage === 0}
         style={{ ...arrowStyle, left: "10px" }}
       >
         &#8592;
@@ -149,7 +149,6 @@ const AboutUs = () => {
 
       <button
         onClick={handleNext}
-        disabled={currentPage === totalPages - 1}
         style={{ ...arrowStyle, right: "10px" }}
       >
         &#8594;
