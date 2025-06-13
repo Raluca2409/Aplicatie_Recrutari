@@ -3,6 +3,7 @@ import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { sendPasswordResetEmail } from "firebase/auth";
+import PasswordInput from "../components/PasswordInput";
 
 
 const Login = () => {
@@ -80,14 +81,10 @@ const Login = () => {
           style={inputStyle}
         />
 
-        <input
-          type="password"
-          placeholder="Parolă"
+        <PasswordInput
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
-          style={inputStyle}
-          
+          placeholder="Parola"
         />
 
         <button

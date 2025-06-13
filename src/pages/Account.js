@@ -78,70 +78,70 @@ const Account = () => {
     );
   }
 
-  if(user && !existingData){
+  if (user && !existingData) {
+    const isLiga = user.email.endsWith("@ligaac.ro");
+  
     return (
-
       <div style={{
-      backgroundImage: `url('/poza_fundal_blur.JPEG')`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-      height: "100vh",
-      width: "100vw",
-      overflow: "hidden",
-      fontFamily: "Montserrat, sans-serif",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      }}
-      >
-
-    <div style={{
-      backgroundColor: "rgba(255, 255, 255, 0.85)",
-      backdropFilter: "blur(12px)",
-      WebkitBackdropFilter: "blur(12px)",
-      borderRadius: "16px",
-      padding: "3rem",
-      maxWidth: "700px",
-      width: "90%",
-      textAlign: "center",
-      boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
-    }}
-    >
-      <h3 style={{ color: "#b30000", marginBottom: "1rem", textAlign: "center"}}>Date cont</h3>
-       <div style={{textAlign: "left", display: "flex", flexDirection: "column", alignItems: "flex-start"}}>
-        <p><strong>Nume:</strong> {userInfo?.lastName || "–"}</p>
-        <p><strong>Prenume:</strong> {userInfo?.firstName || "–"}</p>
-        <p><strong>Email:</strong> {user?.email}</p>
+        backgroundImage: `url('/poza_fundal_blur.JPEG')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        height: "100vh",
+        width: "100vw",
+        overflow: "hidden",
+        fontFamily: "Montserrat, sans-serif",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}>
+        <div style={{
+          backgroundColor: "rgba(255, 255, 255, 0.85)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          borderRadius: "16px",
+          padding: "3rem",
+          maxWidth: "700px",
+          width: "90%",
+          textAlign: "center",
+          boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
+        }}>
+          <h3 style={{ color: "#b30000", marginBottom: "1rem", textAlign: "center" }}>Date cont</h3>
+          <div style={{ textAlign: "left", display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+            <p><strong>Nume:</strong> {userInfo?.lastName || "–"}</p>
+            <p><strong>Prenume:</strong> {userInfo?.firstName || "–"}</p>
+            <p><strong>Email:</strong> {user?.email}</p>
+          </div>
+  
+          {!isLiga && (
+            <>
+              <hr style={{ margin: "1.5rem 0" }} />
+              <p style={{ color: "#b30000", fontWeight: "bold" }}>Nu ai completat formularul încă, dar îl poți accesa și de aici.</p>
+              <Link to="/form">
+                <button
+                  className="btn-pop"
+                  style={{
+                    padding: "1rem 2rem",
+                    backgroundColor: "#b30000",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "8px",
+                    fontSize: "1.2rem",
+                    fontWeight: "bold",
+                    cursor: "pointer",
+                    boxShadow: "0 6px 12px rgba(0,0,0,0.25)"
+                  }}
+                >
+                  Formular
+                </button>
+              </Link>
+            </>
+          )}
         </div>
-
-        <hr style={{ margin: "1.5rem 0" }} />
-        <p style={{ color: "#b30000", fontWeight: "bold" }}>Nu ai completat formularul încă, dar îl poți accesa și de aici.</p>
-
-        <Link to="/form">
-             <button
-              className="btn-pop"
-              style={{
-                padding: "1rem 2rem",
-                backgroundColor: "#b30000",
-                color: "white",
-                border: "none",
-                borderRadius: "8px",
-                fontSize: "1.2rem",
-                fontWeight: "bold",
-                cursor: "pointer",
-                boxShadow: "0 6px 12px rgba(0,0,0,0.25)"
-              }}
-              >
-              Formular
-             </button>
-           </Link>
-
       </div>
-    </div>
-   );
+    );
   }
-
+  
 
    return (
 
@@ -211,21 +211,28 @@ const Account = () => {
 
          <p>
            <strong>Status aplicație:</strong>{" "}
-           <span style={{
-             fontWeight: "bold",
-             color:
-               existingData.status === "accepted"
-                 ? "green"
-                 : existingData.status === "rejected"
-                 ? "red"
-                 : "#b30000"
-           }}>
+           <span
+             style={{
+               fontWeight: "bold",
+               color:
+                 existingData.status === "accepted"
+                   ? "green"
+                   : existingData.status === "interview"
+                   ? "#0066cc"
+                   : existingData.status === "rejected"
+                   ? "red"
+                   : "#b30000",
+             }}
+           >
              {existingData.status === "accepted"
                ? "Acceptat"
+               : existingData.status === "interview"
+               ? "Acceptat pentru interviu"
                : existingData.status === "rejected"
                ? "Respins"
-               : "În așteptare"}
+               : "În verificare"}
            </span>
+
          </p>
        </div>
       </div>

@@ -127,7 +127,7 @@ const Formular = () => {
       }}
       >
 
-        <h2 style={{ color: "#b30000", fontWeight: "bold" }}>Trebuie să-ți creezi un cont înainte de a completa formularul.</h2>
+        <h2 style={{ color: "#b30000", fontWeight: "bold" }}>Trebuie să-ți creezi un cont înainte de a completa formularul. Pentru asta poți merge la pagina de Înregistrare.</h2>
 
       </div>
       </div>

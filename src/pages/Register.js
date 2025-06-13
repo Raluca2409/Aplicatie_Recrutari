@@ -4,6 +4,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
+import PasswordInput from "../components/PasswordInput";
 
 const Register = () => {
   const [user] = useAuthState(auth);
@@ -191,29 +192,19 @@ const Register = () => {
         <label style={{ color: errors.password ? "red" : "#333" }}>
           Parolă*
         </label>
-        <input
-          type="password"
+        <PasswordInput
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          disabled={user !== null}
-          style={{
-            ...inputStyle,
-            borderColor: errors.password ? "red" : "#ccc"
-          }}
+          name="password"
         />
 
         <label style={{ color: errors.confirmPassword ? "red" : "#333" }}>
           Confirmă parola*
         </label>
-        <input
-          type="password"
+        <PasswordInput
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          disabled={user !== null}
-          style={{
-            ...inputStyle,
-            borderColor: errors.confirmPassword ? "red" : "#ccc"
-          }}
+          name="confirmPassword"
         />
 
         <button

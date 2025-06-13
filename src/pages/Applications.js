@@ -218,7 +218,14 @@ const Applications = () => {
                       position: "absolute",
                       bottom: "1rem",
                       right: "1rem",
-                      backgroundColor: app.status === 'accepted' ? '#2e7d32' : app.status === 'rejected' ? '#c62828' : '#F29339',
+                      backgroundColor:
+                      app.status === 'accepted'
+                        ? '#2e7d32' 
+                        : app.status === 'interview'
+                        ? '#0066cc' 
+                        : app.status === 'rejected'
+                        ? '#c62828' 
+                        : '#F29339' ,
                       color: "white",
                       padding: "1rem 2rem",
                       borderRadius: "8px",
@@ -227,7 +234,7 @@ const Applications = () => {
                       cursor: "pointer"
                     }}
                 > 
-                {app.status === 'accepted' ? 'Acceptat' : app.status === 'rejected' ? 'Respins' : 'Verifică'}
+                {app.status === 'accepted' ? 'Acceptat' : app.status === 'rejected' ? 'Respins' : app.status === 'interview' ? 'Acceptat pentru interviu' : 'Verifică'}
                 </button>
 
               </div>
@@ -297,8 +304,9 @@ const Applications = () => {
         onChange={e => setStatus(e.target.value)}
         style={{ width: "100%", marginBottom: "1rem", padding: "0.5rem" }}
       >
-        <option value="pending">În așteptare</option>
+        <option value="pending">Verifică</option>
         <option value="accepted">Acceptat</option>
+        <option value="interview">Acceptat pentru interviu</option>
         <option value="rejected">Respins</option>
       </select>
 

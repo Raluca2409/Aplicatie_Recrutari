@@ -46,8 +46,29 @@ const Navbar = () => {
       }}
     >
       <div style={{ flex: "1" }}>
-        <h1 style={{ margin: 0 }}>Liga AC</h1>
-      </div>
+  <Link to="/" style={{ textDecoration: "none" }}>
+    <button
+      className="btn-pop"
+      style={{
+        background: "rgba(255, 255, 255, 0.9)",
+        borderRadius: "12px",
+        boxShadow: "0 6px 12px rgba(0, 0, 0, 0.3)",
+        padding: "0.5rem 1rem",
+        border: "none",
+        cursor: "pointer"
+      }}
+    >
+      <img
+        src="/logo_ligaac.svg"
+        alt="Liga AC"
+        style={{
+          height: "35px",
+          display: "block"
+        }}
+      />
+    </button>
+  </Link>
+</div>
 
       <div
         style={{
@@ -101,7 +122,7 @@ const Navbar = () => {
               className="btn-pop"
               style={{
                 padding: "0.5rem 1.2rem",
-                background: "white",
+                background: "rgba(255, 255, 255, 0.9)",
                 border: "none",
                 fontSize: "1rem",
                 fontWeight: "600",
@@ -109,6 +130,7 @@ const Navbar = () => {
                 color: "#b30000",
                 cursor: "pointer",
                 borderRadius: "10px",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
               }}
             >
               Conectează-te
@@ -127,6 +149,19 @@ const Navbar = () => {
                 color: "white",
               }}
             >
+              <div
+                className="profile-icon"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "0.2rem",
+                  cursor: "pointer",
+                  color: "white",
+                  transition: "transform 0.2s ease, box-shadow 0.2s ease",
+                  borderRadius: "8px"
+                }}
+              >
               <FaUserCircle size={30} />
               {userData?.firstName && (
                 <p
@@ -140,6 +175,8 @@ const Navbar = () => {
                 </p>
               )}
             </div>
+            </div>
+            
 
             {showDropdown && (
               <div className="dropdown-menu">
