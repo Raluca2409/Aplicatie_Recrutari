@@ -65,7 +65,7 @@ const Interviews = () => {
         const isInterview = userDoc?.status === "interview";
   
         setIsRecruit(true);
-        setAccessDenied(!isInterview); // blocăm accesul dacă nu are status "interview"
+        setAccessDenied(!isInterview); 
       }
   
       setIsLoadingAccess(false);
@@ -295,16 +295,16 @@ const Interviews = () => {
   }, []);
 
   const eventPropGetter = (event) => {
-    let backgroundColor = "#1DB9C1"; // default: sloturi altora
+    let backgroundColor = "#1DB9C1"; 
   
     if (isRecruit) {
-        if (event.isMineReservedRecrut) backgroundColor = "#f6e05e";  // rezervat de mine
-        else if (event.allReserved) backgroundColor = "#b30000";      // toate ocupate
-        else backgroundColor = "#1DB9C1";                              // disponibile
+        if (event.isMineReservedRecrut) backgroundColor = "#f6e05e";  
+        else if (event.allReserved) backgroundColor = "#b30000";      
+        else backgroundColor = "#1DB9C1";                              
       } else {
-        if (event.isMineReserved) backgroundColor = "#f6e05e";  // slotul meu rezervat
-        else if (event.isMine) backgroundColor = "#fe7279";             // slot propriu nerezervat
-        else backgroundColor = "#1DB9C1";                                // alte sloturi
+        if (event.isMineReserved) backgroundColor = "#f6e05e";  
+        else if (event.isMine) backgroundColor = "#fe7279";            
+        else backgroundColor = "#1DB9C1";                               
       }
       
       
@@ -406,12 +406,11 @@ const Interviews = () => {
   
 
   const CustomWrapper = ({ children }) => {
-    if (!children?.props?.event) return children; // nu e eveniment, nu modificăm
+    if (!children?.props?.event) return children; 
   
     return React.cloneElement(React.Children.only(children), {
       style: {
         ...children.props.style,
-        //pointerEvents: "none", // dezactivează DOAR pentru evenimente
       },
     });
   };
@@ -511,7 +510,6 @@ const Interviews = () => {
 
     <div style={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
       
-      {/* Fundal blurat în spate */}
       <div style={{
         position: "fixed",
         top: 0,

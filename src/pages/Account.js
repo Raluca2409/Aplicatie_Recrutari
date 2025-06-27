@@ -177,7 +177,6 @@ const Account = () => {
         }}
         >
 
-          {/* Stânga: date personale */}
         <div style={{ flex: "1 1 45%" }}>
           <h3 style={{ color: "#b30000" }}>Date personale</h3>
           <p><strong>Nume:</strong> {userInfo?.lastName}</p>
@@ -189,7 +188,6 @@ const Account = () => {
           <p><strong>Anul de studiu:</strong> {existingData.anstudiu}</p>
         </div>
             
-        {/* Dreapta: răspunsuri + top departamente */}
         <div style={{ flex: "1 1 45%" }}>
           <h3 style={{ color: "#b30000" }}>Aplicația mea</h3>
           { existingData.q1 === "Da" && (

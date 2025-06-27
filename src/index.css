@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 input::placeholder {
-  font-family: "Montserrat", sans-serif; /* sau ce folosești tu */
+  font-family: "Montserrat", sans-serif; 
   font-weight: 500;
-  color: #888; /* sau alt gri mai plăcut */
+  color: #888; 
   font-size: 1rem;
 }
 
@@ -50,7 +50,6 @@ code {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* Pentru iconița FaUserCircle */
 .nav-icon {
   cursor: pointer;
   transition: transform 0.25s ease;
@@ -119,7 +118,7 @@ code {
 }
 
 .rbc-event {
-  /* background-color: #b30000 !important; */
+
   border: none;
   color: white;
   font-weight: 600;
@@ -128,7 +127,7 @@ code {
 }
 
 .rbc-event {
-  /* background-color: transparent !important; */
+
   padding: 0 !important;
   border: none !important;
   overflow: visible;
