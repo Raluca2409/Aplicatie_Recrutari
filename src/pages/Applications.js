@@ -1,4 +1,3 @@
-// Applications.js
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase";
@@ -142,8 +141,6 @@ const Applications = () => {
             <option value="Educațional">Educațional</option>
           </select>
 
-          
-
           <select onChange={e => setFilterAn(e.target.value)} style={selectStyle}>
             <option value="">An studiu</option>
             <option value="An I Licență">An I Licență</option>
@@ -234,7 +231,7 @@ const Applications = () => {
                       cursor: "pointer"
                     }}
                 > 
-                {app.status === 'accepted' ? 'Acceptat' : app.status === 'rejected' ? 'Respins' : app.status === 'interview' ? 'Acceptat pentru interviu' : 'Verifică'}
+                {app.status === 'accepted' ? 'Acceptat' : app.status === 'rejected' ? 'Respins' : app.status === 'interview' ? 'Acceptat pentru interviu' : 'Revizuie'}
                 </button>
 
               </div>
@@ -304,7 +301,7 @@ const Applications = () => {
         onChange={e => setStatus(e.target.value)}
         style={{ width: "100%", marginBottom: "1rem", padding: "0.5rem" }}
       >
-        <option value="pending">Verifică</option>
+        <option value="pending">Revizuie</option>
         <option value="accepted">Acceptat</option>
         <option value="interview">Acceptat pentru interviu</option>
         <option value="rejected">Respins</option>

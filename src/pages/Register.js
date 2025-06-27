@@ -23,7 +23,6 @@ const Register = () => {
     e.preventDefault();
     setError("");
     const newErrors = {};
-
     if (!firstName.trim()) newErrors.firstName = true;
     if (!lastName.trim()) newErrors.lastName = true;
     if (!email.trim()) newErrors.email = true;
@@ -33,22 +32,17 @@ const Register = () => {
       newErrors.confirmPassword = true;
       setError("Parolele nu se potrivesc!");
     }
-
     if (password.length < 6) {
       setError("Parola trebuie să aibă cel puțin 6 caractere.");
       return;
     }
-
     const specialCharRegex = /[!@#$%^&*(),.?":{}|<>_]/;
     if (!specialCharRegex.test(password)) {
       setError("Parola trebuie să conțină cel puțin un caracter special.");
       return;
     }
-
-
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
-
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await setDoc(doc(db, "users", userCredential.user.uid), {

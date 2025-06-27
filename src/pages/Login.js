@@ -34,7 +34,7 @@ const Login = () => {
     try {
       await sendPasswordResetEmail(auth, email);
       setResetEmailSent(true);
-      setError(""); // curăță alte erori
+      setError(""); 
     } catch (err) {
       setError("A apărut o eroare la trimiterea emailului de resetare.");
       console.error(err);

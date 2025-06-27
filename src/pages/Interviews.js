@@ -44,7 +44,9 @@ const Interviews = () => {
   const [toastMessage, setToastMessage] = useState("");
   const [accessDenied, setAccessDenied] = useState(false);
   const [isLoadingAccess, setIsLoadingAccess] = useState(true);
-
+  const [hasApplication, setHasApplication] = useState(false);
+  const [confirmModal, setConfirmModal] = useState(null);
+  const [pendingAction, setPendingAction] = useState(null);
 
   useEffect(() => {
     const checkRecruitStatus = async () => {
@@ -73,68 +75,77 @@ const Interviews = () => {
   }, []);
 
   useEffect(() => {
-    // Afișăm legenda mereu la accesarea paginii
     if (!isRecruitLoading) {
       setShowLegend(true);
     }
   }, [isRecruitLoading]);
+
+  useEffect(() => {
+    const checkIfHasApplication = async () => {
+      const email = auth.currentUser?.email;
+      if (!email) return;
   
+      const q = query(collection(db, "applications"), where("email", "==", email));
+      const snapshot = await getDocs(q);
   
+      setHasApplication(!snapshot.empty); 
+    };
+  
+    checkIfHasApplication();
+  }, []);
   
   
   const handleSelectSlot = async ({ start, end }) => {
-    //if (isRecruit) return; // doar recrutorii pot adăuga sloturi
     const userEmail = auth.currentUser?.email;
     if (!userEmail?.endsWith("@ligaac.ro")) {
         showToast("Doar recrutorii pot adăuga sloturi.");
         return;
       }
 
-    const confirm = window.confirm("Adaugi acest slot ca disponibil?");
-    if (!confirm) return;
-  
-    const snapshot = await getDocs(collection(db, "interviewSlots"));
-    const startSec = Math.floor(start.getTime() / 1000);
-    const endSec = Math.floor(end.getTime() / 1000);
-  
-    const alreadyAddedByMe = snapshot.docs.find(doc => {
-      const data = doc.data();
-      return (
-        data.start.seconds === startSec &&
-        data.end.seconds === endSec &&
-        data.owner === userEmail
-      );
-    });
-  
-    if (alreadyAddedByMe) {
-        showToast("Ai deja un slot pus în acest interval!");
-      return;
+      setConfirmModal({ type: "recrutor", slot: { start, end } });
+      setPendingAction(() => async () => {
+        const snapshot = await getDocs(collection(db, "interviewSlots"));
+        const startSec = Math.floor(start.getTime() / 1000);
+        const endSec = Math.floor(end.getTime() / 1000);
+      
+        const alreadyAddedByMe = snapshot.docs.find(doc => {
+          const data = doc.data();
+          return (
+            data.start.seconds === startSec &&
+            data.end.seconds === endSec &&
+            data.owner === userEmail
+          );
+        });
+      
+        if (alreadyAddedByMe) {
+          showToast("Ai deja un slot pus în acest interval!");
+          setConfirmModal(null);
+          return;
+        }
+      
+        await addDoc(collection(db, "interviewSlots"), {
+          title: "Slot disponibil",
+          start,
+          end,
+          status: "available",
+          owner: userEmail,
+          createdAt: new Date(),
+        });
+      
+        showToast("Slot adăugat!");
+        window.dispatchEvent(new Event("slotsUpdated"));
+        setConfirmModal(null);
+      });
+      
     }
-  
-    await addDoc(collection(db, "interviewSlots"), {
-      title: "Slot disponibil",
-      start,
-      end,
-      status: "available",
-      owner: userEmail,
-      createdAt: new Date(),
-    });
-  
-    showToast("Slot adăugat!");
-    window.dispatchEvent(new Event("slotsUpdated"));
-  };
-  
   
 
   const handleSelectEvent = async (event) => {
     const userEmail = auth.currentUser?.email;
-    
     if (!userEmail) return;
   
-    // Dacă e recrutor → vrea să adauge un slot în acel interval
     if (!isRecruit) {
       const snapshot = await getDocs(collection(db, "interviewSlots"));
-  
       const startSec = Math.floor(event.start.getTime() / 1000);
       const endSec = Math.floor(event.end.getTime() / 1000);
   
@@ -148,13 +159,11 @@ const Interviews = () => {
       });
   
       if (alreadyAddedByMe) {
-        showToast("Ai deja un slot pus în acest interval!");
         return;
       }
   
-      const confirm = window.confirm("Adaugi și tu un slot în acest interval?");
-      if (!confirm) return;
-  
+      setConfirmModal({ type: "recrutor", slot: event });
+    setPendingAction(() => async () => {
       await addDoc(collection(db, "interviewSlots"), {
         title: "Slot disponibil",
         start: event.start,
@@ -163,13 +172,14 @@ const Interviews = () => {
         owner: userEmail,
         createdAt: new Date(),
       });
-  
       showToast("Slot adăugat!");
       window.dispatchEvent(new Event("slotsUpdated"));
-      return;
-    }
+      setConfirmModal(null);
+    });
+
+    return;
+  }
   
-    // Dacă e recrut → rezervare
     const snapshot = await getDocs(collection(db, "interviewSlots"));
     const alreadyReserved = snapshot.docs.find(doc => {
         const data = doc.data();
@@ -197,17 +207,19 @@ const Interviews = () => {
         showToast("Toate locurile sunt ocupate.");
         return;
       }
-      
-      // 3. Actualizează slotul existent → rezervare
-      await updateDoc(doc(db, "interviewSlots", slotToReserve.id), {
-        status: "reserved",
-        reservedBy: userEmail,
-        updatedAt: new Date()
-      });
-      
-      showToast("Slot rezervat cu succes!");
-      window.dispatchEvent(new Event("slotsUpdated"));
-  };
+
+      setConfirmModal({ type: "recruit", slot: event });
+  setPendingAction(() => async () => {
+    await updateDoc(doc(db, "interviewSlots", slotToReserve.id), {
+      status: "reserved",
+      reservedBy: userEmail,
+      updatedAt: new Date(),
+    });
+    showToast("Slot rezervat cu succes!");
+    window.dispatchEvent(new Event("slotsUpdated"));
+    setConfirmModal(null);
+  });
+};
   
 
   const fetchSlots = async () => {
@@ -319,6 +331,79 @@ const Interviews = () => {
   setTimeout(() => setToastMessage(""), 3000);
   };
 
+  const confirmAction = async () => {
+    const userEmail = auth.currentUser?.email;
+    const { type, slot } = confirmModal;
+    const startSec = Math.floor(slot.start.getTime() / 1000);
+    const endSec = Math.floor(slot.end.getTime() / 1000);
+    const snapshot = await getDocs(collection(db, "interviewSlots"));
+  
+    if (type === "recrutor") {
+      const alreadyAddedByMe = snapshot.docs.find(doc => {
+        const data = doc.data();
+        return data.start.seconds === startSec &&
+               data.end.seconds === endSec &&
+               data.owner === userEmail;
+      });
+  
+      if (alreadyAddedByMe) {
+        showToast("Ai deja un slot pus în acest interval!");
+        setConfirmModal(null);
+        return;
+      }
+  
+      await addDoc(collection(db, "interviewSlots"), {
+        title: "Slot disponibil",
+        start: slot.start,
+        end: slot.end,
+        status: "available",
+        owner: userEmail,
+        createdAt: new Date(),
+      });
+  
+      showToast("Slot adăugat!");
+    }
+  
+    if (type === "recruit") {
+      const alreadyReserved = snapshot.docs.find(doc => {
+        const data = doc.data();
+        return data.reservedBy === userEmail && data.status === "reserved";
+      });
+  
+      if (alreadyReserved) {
+        showToast("Ai deja un slot rezervat.");
+        setConfirmModal(null);
+        return;
+      }
+  
+      const slotToReserve = snapshot.docs.find(doc => {
+        const data = doc.data();
+        return (
+          data.start.seconds === startSec &&
+          data.end.seconds === endSec &&
+          data.status === "available"
+        );
+      });
+  
+      if (!slotToReserve) {
+        showToast("Toate locurile sunt ocupate.");
+        setConfirmModal(null);
+        return;
+      }
+  
+      await updateDoc(doc(db, "interviewSlots", slotToReserve.id), {
+        status: "reserved",
+        reservedBy: userEmail,
+        updatedAt: new Date()
+      });
+  
+      showToast("Slot rezervat cu succes!");
+    }
+  
+    setConfirmModal(null);
+    window.dispatchEvent(new Event("slotsUpdated"));
+  };
+  
 
   const CustomWrapper = ({ children }) => {
     if (!children?.props?.event) return children; // nu e eveniment, nu modificăm
@@ -346,25 +431,80 @@ const Interviews = () => {
       </div>
     );
   };
+
+  if (!hasApplication && !auth.currentUser?.email.endsWith("@ligaac.ro")) {
+    return (
+        <div style={{
+          backgroundImage: `url('/poza_fundal_blur.JPEG')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          height: "100vh",
+          width: "100vw",
+          overflow: "hidden",
+          fontFamily: "Montserrat, sans-serif",
+          position: "relative",
+          color: "white",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          boxSizing: "border-box",
+        }}>
+  
+        <div
+        style={{
+          backgroundColor: "rgba(255, 255, 255, 0.69)",
+          backdropFilter: "blur(10px)",
+          WebkitBackdropFilter: "blur(10px)",
+          borderRadius: "16px",
+          padding: "2rem 3rem",
+          textAlign: "center",
+          maxWidth: "600px",
+          boxShadow: "0 8px 20px rgba(0, 0, 0, 0.4)",
+        }}
+        >
+        <h2 style={{ color: "#b30000", marginBottom: "1rem" }}>Trebuie să completezi mai întâi formularul pentru a accesa această pagină.</h2>
+      </div>
+        </div>
+      );
+  }
+  
   
   if (accessDenied) {
     return (
-      <div style={{
-        textAlign: "center",
-        paddingTop: "5rem",
-        fontSize: "1.3rem",
-        color: "#b30000",
-        fontWeight: "bold",
-        backgroundColor: "#fff",
-        padding: "3rem",
-        margin: "3rem auto",
-        maxWidth: "600px",
-        borderRadius: "12px",
-        boxShadow: "0 6px 16px rgba(0,0,0,0.1)"
-      }}>
-        Din păcate nu ai fost acceptat pentru interviu.
+        <div style={{
+          backgroundImage: `url('/poza_fundal_blur.JPEG')`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          height: "100vh",
+          width: "100vw",
+          overflow: "hidden",
+          fontFamily: "Montserrat, sans-serif",
+          position: "relative",
+          color: "white",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          boxSizing: "border-box",
+        }}>
+  
+        <div
+        style={{
+          backgroundColor: "rgba(255, 255, 255, 0.69)",
+          backdropFilter: "blur(10px)",
+          WebkitBackdropFilter: "blur(10px)",
+          borderRadius: "16px",
+          padding: "2rem 3rem",
+          textAlign: "center",
+          maxWidth: "600px",
+          boxShadow: "0 8px 20px rgba(0, 0, 0, 0.4)",
+        }}
+        >
+        <h2 style={{ color: "#b30000", marginBottom: "1rem" }}>Din păcate nu ai fost acceptat pentru interviu sau aplicația ta nu a fost verificată încă. Verfică statusul aplicației în contul tău.</h2>
       </div>
-    );
+        </div>
+      );
   }
   
   return (
@@ -437,6 +577,46 @@ const Interviews = () => {
             toolbar: CustomToolbar
           }}
         />
+
+{confirmModal && (
+  <div style={{
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "#fff",
+    padding: "2rem",
+    borderRadius: "10px",
+    zIndex: 9999,
+    boxShadow: "0 6px 20px rgba(0,0,0,0.3)",
+    minWidth: "300px",
+    textAlign: "center"
+  }}>
+    <h3 style={{ marginBottom: "1rem" }}>
+      {confirmModal.type === "recrutor"
+        ? "Dorești să adaugi și tu un slot în acest interval?"
+        : "Dorești să rezervi acest slot pentru interviu?"}
+    </h3>
+    <div style={{ display: "flex", justifyContent: "center", gap: "1rem" }}>
+      <button onClick={confirmAction} style={{
+        padding: "0.6rem 1.2rem",
+        backgroundColor: "#b30000",
+        color: "#fff",
+        border: "none",
+        borderRadius: "6px",
+        cursor: "pointer"
+      }}>Da</button>
+      <button onClick={() => setConfirmModal(null)} style={{
+        padding: "0.6rem 1.2rem",
+        backgroundColor: "#ccc",
+        color: "#000",
+        border: "none",
+        borderRadius: "6px",
+        cursor: "pointer"
+      }}>Nu</button>
+    </div>
+  </div>
+)}
   
         {showLegend && (
           <div style={{

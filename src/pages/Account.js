@@ -37,7 +37,6 @@ const Account = () => {
         }
       }
     };
-  
     fetchUserInfo();
   }, [user]);
   
