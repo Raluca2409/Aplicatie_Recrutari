@@ -1,4 +1,4 @@
-# Aplicție de gestionare a procesului de recrutare într-o organizație de voluntariat
+# Aplicație de gestionare a procesului de recrutare într-o organizație de voluntariat
 
 ### Ce trebuie făcut înainte de a descărca proiectul:
 
@@ -8,20 +8,20 @@
 
 3. Descărcarea unui IDE, precum Visual Studio Code
 
-#### Descărcarea proiectului
+#### Descărcarea proiectului:
 
 1. Se accesează linkul următor pentru codul sursă https://github.com/Raluca2409/Aplicatie_Recrutari
 
 2. Se clonează proiectul în terminal cu ajutorul comenzii git clone https://github.com/Raluca2409/Aplicatie_Recrutari.git
 
-#### Rularea proiectului
+#### Rularea proiectului:
 
 1. Deschiderea proiectului în IDE
 2. Navigarea în terminal cu comanda cd Aplicatie_Recrutari
 3. Instalarea dependințelor, cu comanda npm install
 4. Pornirea aplicației local, cu comanda npm start
 
-#### Accesarea locală a aplicației
+#### Accesarea locală a aplicației:
 
 1. După ce comanda anterioară s-a efectuat cu succes, aplicația poate fi accesata în browser la adresa http://localhost:3000
 
