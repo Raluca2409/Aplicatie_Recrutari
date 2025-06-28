@@ -1,56 +1,31 @@
-# Licenta
+# Aplicție de gestionare a procesului de recrutare într-o organizație de voluntariat
 
-Proiect realizat cu ajutorul [Create React App](https://github.com/facebook/create-react-app), folosit ca bază pentru dezvoltarea aplicației de recrutare.
+### Ce trebuie făcut înainte de a descărca proiectul:
 
-## Getting Started with Create React App
+1. Descăracarea și instalarea Git, de la adresa  https://git-scm.com/download, sau în caz alternativ se vor utiliza comenzile din terminal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+2. Descărcarea și instalarea Node.js și npm (Node Package Manager), de la adresa https://nodejs.org/en/download
 
-### Available Scripts
+3. Descărcarea unui IDE, precum Visual Studio Code
 
-In the project directory, you can run:
+#### Descărcarea proiectului
 
-#### `npm start`
+1. Se accesează linkul următor pentru codul sursă https://github.com/Raluca2409/Aplicatie_Recrutari
 
-Runs the app in the development mode.  
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.  
-The page will reload when you make changes.  
-You may also see any lint errors in the console.
+2. Se clonează proiectul în terminal cu ajutorul comenzii git clone https://github.com/Raluca2409/Aplicatie_Recrutari.git
 
-#### `npm test`
+#### Rularea proiectului
 
-Launches the test runner in the interactive watch mode.  
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Deschiderea proiectului în IDE
+2. Navigarea în terminal cu comanda cd Aplicatie_Recrutari
+3. Instalarea dependințelor, cu comanda npm install
+4. Pornirea aplicației local, cu comanda npm start
 
-#### `npm run build`
+#### Accesarea locală a aplicației
 
-Builds the app for production to the `build` folder.  
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. După ce comanda anterioară s-a efectuat cu succes, aplicația poate fi accesata în browser la adresa http://localhost:3000
 
-The build is minified and the filenames include the hashes.  
-Your app is ready to be deployed!
+#### Aplicația este disponibilă și online
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Pentru a accesa aplicația se utilizează adresa https://aplicatie-recrutari.web.app/
 
-#### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc.) right into your project so you have full control over them.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Other Resources
-
-- [Code Splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-- [Analyzing the Bundle Size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-- [Making a Progressive Web App](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-- [Advanced Configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-- [Deployment](https://facebook.github.io/create-react-app/docs/deployment)
-- [Troubleshooting build](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
